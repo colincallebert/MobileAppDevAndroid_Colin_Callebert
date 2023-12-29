@@ -65,6 +65,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.navigation:navigation-testing:2.7.6")
 
 
     val room_version = "2.5.0"
