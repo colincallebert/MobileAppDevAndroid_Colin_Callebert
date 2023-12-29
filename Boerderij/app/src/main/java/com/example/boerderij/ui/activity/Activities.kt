@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,7 +39,7 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 4.dp)
+                .padding(bottom = 7.dp)
                 .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -49,9 +50,9 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .clip(shape = MaterialTheme.shapes.medium)
-                    .size(90.dp)
+                    .size(70.dp)
                     .background(Color.Gray, shape = MaterialTheme.shapes.medium)
+                    .clip(MaterialTheme.shapes.extraSmall)
 
             )
 
@@ -60,13 +61,13 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
             Text(
                 text = activity.title,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).padding(horizontal = 6.dp)
             )
             Icon(
-                imageVector = Icons.Filled.ArrowRight,
+                imageVector = Icons.Filled.MoreHoriz,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(30.dp)
                     .padding(start = 8.dp)
             )
         }
