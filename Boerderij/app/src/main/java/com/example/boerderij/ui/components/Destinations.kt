@@ -6,4 +6,5 @@ enum class Destinations {
     Activities,
     ActivityDetail,
     ActivityRegistration,
+    AboutUs,
 }

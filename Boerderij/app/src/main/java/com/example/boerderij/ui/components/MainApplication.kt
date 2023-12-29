@@ -2,8 +2,13 @@ package com.example.boerderij.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
@@ -21,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.boerderij.data.RetrofitInstance
 import com.example.boerderij.model.activity.Activity
 import com.example.boerderij.modelview.ActivityController
+import com.example.boerderij.ui.aboutUs.AboutUs
 import com.example.boerderij.ui.homepage.Homepage
 import com.example.boerderij.ui.activity.Activities
 import com.example.boerderij.ui.activity.ActivityDetail
@@ -32,7 +39,7 @@ fun MainApplication(
     windowSize: WindowWidthSizeClass
 ) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    //val isStartDestination = currentBackStackEntry?.destination?.route == Destinations.Start.name
+    val isStartDestination = currentBackStackEntry?.destination?.route == Destinations.Start.name
     var data by remember { mutableStateOf(emptyList<Activity>()) }
     LaunchedEffect(Unit) {
         var activities = ActivityController().getActivities()
@@ -56,6 +63,9 @@ fun MainApplication(
     val goReservation: (Int) -> Unit = { id ->
         navController.navigate("${Destinations.ActivityRegistration.name}/$id")
     }
+    val goAboutUs: () -> Unit = {
+        navController.navigate(Destinations.AboutUs.name)
+    }
 
     val navigationType: AppNavigationType
     when (windowSize) {
@@ -77,6 +87,24 @@ fun MainApplication(
     }
 
     Scaffold(
+        topBar = {
+            if (navigationType == AppNavigationType.BOTTOM_NAVIGATION) {
+                TopNavBar(
+                    {
+                        if (!isStartDestination) {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(
+                                    Icons.Filled.ArrowBack,
+                                    contentDescription = "Ga terug"
+                                )
+                            }
+                        }
+                    },
+                    onAbout = { navController.navigate(Destinations.AboutUs.name) },
+                )
+            }
+
+        },
         bottomBar = {
             if (navigationType == AppNavigationType.BOTTOM_NAVIGATION) {
                 BottomAppBar(
@@ -92,6 +120,7 @@ fun MainApplication(
                 RailAppNavigation(
                     onHome = goHome,
                     onActivities  = goActivities,
+                    onAboutUs = goAboutUs,
                     currentBackStackEntry = currentBackStackEntry?.destination?.route,
                 )
             }
@@ -127,6 +156,9 @@ fun MainApplication(
                     } else {
                         Text("Ongeldig activity ID")
                     }
+                }
+                composable(route = Destinations.AboutUs.name) {
+                    AboutUs()
                 }
             }
         }
