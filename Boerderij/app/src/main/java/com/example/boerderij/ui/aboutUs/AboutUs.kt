@@ -80,7 +80,7 @@ fun AboutUs() {
                         contentDescription = "Farm Image",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(200.dp)
+                            .padding(16.dp)
                             .clip(shape = MaterialTheme.shapes.medium),
                         contentScale = ContentScale.Crop
                     )

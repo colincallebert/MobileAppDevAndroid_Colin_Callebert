@@ -41,6 +41,6 @@ class NavigationTest {
 
     @Test
     fun NavHost_navigateToDetail() {
-        
+
     }
 }

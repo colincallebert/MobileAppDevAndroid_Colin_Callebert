@@ -46,7 +46,7 @@ fun Function(activity: Activity, goDetail: (Int) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF9DBB7A))
+                .background(MaterialTheme.colorScheme.inverseOnSurface)
                 .border(2.dp, Color(0xFFA9ACA5), MaterialTheme.shapes.large)
         )
         {

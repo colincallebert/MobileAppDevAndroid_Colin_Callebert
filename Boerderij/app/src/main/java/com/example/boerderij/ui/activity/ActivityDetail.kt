@@ -2,6 +2,7 @@ package com.example.boerderij.ui.activity
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -51,6 +52,7 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .border(2.dp, Color(0xFFA9ACA5), MaterialTheme.shapes.large)
     ) {
         Column(
             modifier = Modifier
