@@ -102,5 +102,16 @@ class NavigationTest {
         navController.assertCurrentRouteName("${Destinations.ActivityDetail.name}/{id}")
     }
 
+    @Test
+    fun NavHost_clickGoBackArrowActivities_navigatesToHomepage() {
+        navigateToHomeScreen()
+        Thread.sleep(1000)
+        navigateToActivitiesScreen()
+        Thread.sleep(1000)
+        composeTestRule.onNodeWithContentDiscripitionId(R.string.go_back)
+            .performClick()
+        navController.assertCurrentRouteName(Destinations.Start.name)
+    }
+
 
 }

@@ -16,11 +16,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.boerderij.R
 import com.example.boerderij.model.activity.Activity
 import com.example.boerderij.modelview.ActivityController
 import com.example.boerderij.ui.aboutUs.AboutUs
@@ -101,7 +103,7 @@ fun MainApplication(
                             IconButton(onClick = { navController.popBackStack() }) {
                                 Icon(
                                     Icons.Filled.ArrowBack,
-                                    contentDescription = "Go back"
+                                    contentDescription = stringResource(R.string.go_back),
                                 )
                             }
                         }
