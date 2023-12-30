@@ -33,6 +33,7 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
 
     Column(
         modifier = modifier
+            .testTag("${stringResource(R.string.detail)}+${activity.id}")
             .clickable(onClick = { goDetail(activity.id) })
             .padding(4.dp)
     ) {

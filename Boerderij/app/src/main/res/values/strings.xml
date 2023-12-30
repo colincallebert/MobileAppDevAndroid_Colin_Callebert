@@ -2,6 +2,9 @@
     <string name="app_name">Boerderij</string>
     <string name="go_to_home">Ga naar home</string>
     <string name="go_to_activities">Ga naar activiteiten</string>
+    <string name="go_to_aboutus">Ga naar over ons</string>
+    <string name="detail">Ga naar detail</string>
+    <string name="form">Ga naar form</string>
     <string name="overons">In de ouderenboerderij kunnen ouderen terecht die behoefte hebben aan een dagbesteding. In de boerderij vinden er verschillende activiteiten plaats op maat van de ouderen. Er zijn geen verplichtingen, indien je iets niet wenst te doen kun je er ook gewoon voor kiezen om aanwezig te zijn en te genieten van het gezelschap. Daarnaast zijn de kleinkinderen ook steeds welkom om woensdagnamiddagen. Als ouderenboerderij zetten wij in op de vereenzaming van ouderen. Dit wensen we te doen door de ouderen samen te brengen en de generaties te verenigen.</string>
     <string name="kortoverons">Wij zijn een ouderenboerderij die zich inzet voor ouderen. Dit doen we door de ouderen samen te brengen en ze een dag vol leuke activiteiten te geven.</string>
 </resources>

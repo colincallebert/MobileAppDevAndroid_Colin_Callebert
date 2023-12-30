@@ -35,7 +35,7 @@ fun TopNavBar(
             IconButton(onAbout) {
                 Icon(
                     Icons.Filled.Group,
-                    contentDescription = "About us",
+                    contentDescription = stringResource(R.string.go_to_aboutus),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }

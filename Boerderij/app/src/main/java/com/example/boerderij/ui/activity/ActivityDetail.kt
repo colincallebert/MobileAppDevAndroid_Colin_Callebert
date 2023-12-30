@@ -24,7 +24,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.boerderij.R
@@ -98,7 +100,11 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
             if (activity.amount == 0) {
                 Button(
                     onClick = { goRegistration(activity.id) } ,
-                    modifier = Modifier.padding(8.dp)
+
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .testTag("${stringResource(R.string.form)}")
+
                 ) {
                     Text(text="Maak een reservering",
                         modifier = Modifier.padding(),
