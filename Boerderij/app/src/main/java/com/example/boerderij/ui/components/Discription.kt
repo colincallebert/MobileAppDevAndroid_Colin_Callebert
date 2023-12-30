@@ -23,30 +23,29 @@ import com.example.boerderij.R
 
 @Composable
 fun Discription() {
-
+    // Column layout containing welcome message, description card, and spacer
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-
     ) {
+        // Welcome message
         Text(
             text = "Welkom op onze Ouderenboerderij!",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF000000),
-            modifier = Modifier
-                .padding(top = 40.dp)
-
+            color = Color(0xFF000000), // Black color
+            modifier = Modifier.padding(top = 40.dp)
         )
+
+        // Card containing description
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, bottom = 16.dp, start = 8.dp, end = 8.dp)
                 .border(2.dp, Color.Gray, MaterialTheme.shapes.medium)
-
         ) {
             Text(
-                text = stringResource(id = R.string.overons),
+                text = stringResource(id = R.string.overons), // Load description from resources
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -55,13 +54,7 @@ fun Discription() {
             )
         }
 
+        // Spacer to push content to the bottom
         Spacer(modifier = Modifier.weight(1f))
     }
 }
-
-@Composable
-@Preview
-fun DiscriptionPreview() {
-    Discription()
-}
-

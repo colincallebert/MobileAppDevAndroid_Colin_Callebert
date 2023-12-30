@@ -14,24 +14,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.boerderij.R
 
-
+/**
+ * Composable function for the top app bar.
+ *
+ * @param navigationIcon The action to perform when the navigation icon is clicked.
+ * @param onAbout The action to perform when the about us icon is clicked.
+ */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopNavBar(
     navigationIcon: @Composable () -> Unit,
     onAbout: () -> Unit,
 ) {
+    // Create a TopAppBar with specified colors
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary,
-
-            ),
+        ),
+        // Set the title of the app
         title = {
             Text(stringResource(R.string.app_name))
         },
+        // Set the navigation icon and actions
         navigationIcon = navigationIcon,
         actions = {
+            // Add an action (AboutUs) to the app bar
             IconButton(onAbout) {
                 Icon(
                     Icons.Filled.Group,

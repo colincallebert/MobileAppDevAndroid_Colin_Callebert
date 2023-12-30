@@ -25,15 +25,21 @@ import coil.compose.rememberImagePainter
 import com.example.boerderij.R
 import com.example.boerderij.model.activity.Activity
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Composable function for the Activities screen.
+ */
 @Composable
 fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier = Modifier) {
+    // Extracting image name from the activity description (format: "shortdescription|image|longdescription")
     val imageName = activity.description.split("|")[1]
+    // Getting resource ID for the image
     val imageResourceId = getImageResourceId(imageName)
 
     Column(
         modifier = modifier
+            // Adding a test tag for UI testing
             .testTag("${stringResource(R.string.detail)}+${activity.id}")
+            // Making the item clickable and providing a click listener
             .clickable(onClick = { goDetail(activity.id) })
             .padding(4.dp)
     ) {
@@ -45,7 +51,7 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
+            // Displaying the image associated with the activity
             Image(
                 painter = painterResource(id = imageResourceId),
                 contentDescription = null,
@@ -54,16 +60,17 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
                     .size(70.dp)
                     .background(Color.Gray, shape = MaterialTheme.shapes.medium)
                     .clip(MaterialTheme.shapes.extraSmall)
-
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
+            // Displaying the title of the activity
             Text(
                 text = activity.title,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f).padding(horizontal = 6.dp)
             )
+            // Adding a more options icon
             Icon(
                 imageVector = Icons.Filled.MoreHoriz,
                 contentDescription = null,
@@ -73,19 +80,29 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
             )
         }
 
+        // Adding a divider between activity items
         Divider(modifier = Modifier.height(1.dp).fillMaxWidth())
     }
 }
 
 @Composable
 fun Activities(activities: List<Activity>, goDetail: (Int) -> Unit) {
+    // Displaying a list of activities using LazyColumn
     LazyColumn(modifier = Modifier.padding(top = 8.dp)) {
         items(activities) { activity ->
+            // Displaying individual activity items
             ActivityList(activity, goDetail)
         }
     }
 }
 
+/**
+ * Retrieves the resource ID for the given image name.
+ *
+ * @param imageName The name of the image.
+ * @return The resource ID associated with the image name.
+ */
 private fun getImageResourceId(imageName: String): Int {
+    // Using reflection to get the resource ID dynamically
     return R.drawable::class.java.getField(imageName).getInt(null)
 }

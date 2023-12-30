@@ -36,20 +36,26 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Composable function for the Activity Detail screen.
+ */
 @Composable
 fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
-
+    // Extracting image name and longdescription from the activity description (format: "shortdescription|image|longdescription")
     var imageName = activity.description.split("|")[1]
     var imageResourceId = getImageResourceId(imageName)
     var longDescription = activity.description.split("|")[2]
 
+    // State variable to handle the toggle for activity deletion
     var toggle by remember { mutableStateOf(false) }
 
+    // Check and perform action based on toggle state
     if (toggle) {
         verwijderActivity(activity.id)
         toggle = false
     }
 
+    // Card displaying detailed information about the activity
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,12 +67,14 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
+            // Title of the activity
             Text(
                 text = activity.title,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 
+            // Image associated with the activity
             Image(
                 painter = painterResource(id = imageResourceId),
                 contentDescription = null,
@@ -78,6 +86,7 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
                 contentScale = ContentScale.Crop
             )
 
+            // Long description of the activity
             Text(
                 text = longDescription,
                 style = MaterialTheme.typography.bodyLarge,
@@ -86,27 +95,30 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Formatted date of the activity
             Text(
                 text = formattedDate(activity.starttime),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 4.dp, top = 16.dp)
             )
 
+            // Formatted time range of the activity
             Text(
                 text = formattedTimeRange(activity.starttime, activity.endtime),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
+
+            // Button for registration or cancellation based on availability
             if (activity.amount == 0) {
                 Button(
                     onClick = { goRegistration(activity.id) } ,
-
                     modifier = Modifier
                         .padding(8.dp)
                         .testTag("${stringResource(R.string.form)}")
-
                 ) {
-                    Text(text="Maak een reservering",
+                    Text(
+                        text = "Maak een reservering",
                         modifier = Modifier.padding(),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyLarge,
@@ -117,7 +129,8 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
                     onClick = {  toggle = true } ,
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text(text="Reservering annuleren",
+                    Text(
+                        text = "Reservering annuleren",
                         modifier = Modifier.padding(),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyLarge,
@@ -130,18 +143,29 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
 
 @Composable
 fun verwijderActivity(id: Int) {
+    // LaunchedEffect to asynchronously delete the activity registration
     LaunchedEffect(Unit) {
         ActivityController().deleteRegistration(id)
-
     }
 }
 
+/**
+ * Retrieves the resource ID for the given image name.
+ *
+ * @param imageName The name of the image.
+ * @return The resource ID associated with the image name.
+ */
 private fun getImageResourceId(imageName: String): Int {
     var resourceId = R.drawable::class.java.getField("${imageName}").getInt(null)
-
     return resourceId
 }
 
+/**
+ * Formats the date string into a format that just shows the date.
+ *
+ * @param dateString The date string to be formatted.
+ * @return The formatted date string.
+ */
 fun formattedDate(dateString: String): String {
     val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val date: Date = try {
@@ -154,6 +178,13 @@ fun formattedDate(dateString: String): String {
     return dateFormatter2.format(date)
 }
 
+/**
+ * Formats the time range string into a format that shows the start and end time.
+ *
+ * @param startTime The start time of the activity.
+ * @param endTime The end time of the activity.
+ * @return The formatted time range string.
+ */
 fun formattedTimeRange(startTime: String, endTime: String): String {
     val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
 

@@ -29,12 +29,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.boerderij.R
 
+/**
+ * Composable function for the About Us screen.
+ */
 @Composable
 fun AboutUs() {
+    // State variables to handle click events for different actions
     var toggleMaps by remember { mutableStateOf(false) }
     var toggleEmail by remember { mutableStateOf(false) }
     var toggleCall by remember { mutableStateOf(false) }
 
+    // Check and perform actions based on state changes
     if (toggleMaps) {
         openGoogleMaps("Steenakkerstraat 4, 8900 Ieper")
         toggleMaps = false
@@ -48,11 +53,13 @@ fun AboutUs() {
         toggleCall = false
     }
 
+    // LazyColumn to display different information sections
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        // Section 1: Introduction and Image
         item {
             Card(
                 modifier = Modifier
@@ -87,6 +94,8 @@ fun AboutUs() {
                 }
             }
         }
+
+        // Section 2: Address
         item {
             Card(
                 modifier = Modifier
@@ -118,6 +127,8 @@ fun AboutUs() {
                 }
             }
         }
+
+        // Section 3: Phone Number
         item {
             Card(
                 modifier = Modifier
@@ -149,6 +160,8 @@ fun AboutUs() {
                 }
             }
         }
+
+        // Section 4: Email
         item {
             Card(
                 modifier = Modifier
@@ -183,13 +196,20 @@ fun AboutUs() {
     }
 }
 
+/**
+ * Preview function for the About Us screen.
+ */
 @Preview
 @Composable
 fun AboutUsPagePreview() {
     AboutUs()
 }
 
-
+/**
+ * Opens Google Maps with the specified address.
+ *
+ * @param address The address to open in Google Maps.
+ */
 @Composable
 fun openGoogleMaps(address: String) {
     val googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=${Uri.encode(address)}"
@@ -197,6 +217,9 @@ fun openGoogleMaps(address: String) {
     LocalContext.current.startActivity(intent)
 }
 
+/**
+ * Opens an email client with a pre-filled email to the specified email address.
+ */
 @Composable
 fun openEmailToWebsite() {
     val context = LocalContext.current
@@ -210,6 +233,11 @@ fun openEmailToWebsite() {
     context.startActivity(emailIntent)
 }
 
+/**
+ * Opens the phone dialer with the specified phone number.
+ *
+ * @param number The phone number to dial.
+ */
 @Composable
 fun openCall(number: String) {
     val context = LocalContext.current
@@ -218,3 +246,9 @@ fun openCall(number: String) {
     }
     context.startActivity(callIntent)
 }
+
+
+
+
+
+

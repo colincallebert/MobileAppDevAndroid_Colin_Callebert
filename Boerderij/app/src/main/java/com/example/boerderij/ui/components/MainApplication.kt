@@ -33,20 +33,28 @@ import com.example.boerderij.ui.activity.Activities
 import com.example.boerderij.ui.activity.ActivityDetail
 import com.example.boerderij.ui.activity.ActivityReservation
 
+/**
+ * Composable function for the main application.
+ */
 @Composable
 fun MainApplication(
     navController: NavHostController = rememberNavController(),
     windowSize: WindowWidthSizeClass
 ) {
+    // Retrieve the current back stack entry and check if it is the start destination
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isStartDestination = currentBackStackEntry?.destination?.route == Destinations.Start.name
+
+    // State to hold the list of activities
     var data by remember { mutableStateOf(emptyList<Activity>()) }
+
+    // Fetch activities from the server when the composable is launched
     LaunchedEffect(Unit) {
         var activities = ActivityController().getActivities()
         data = activities
-
     }
 
+    // Lambda functions for navigation actions
     val goHome: () -> Unit = {
         navController.popBackStack(
             Destinations.Start.name,
@@ -56,7 +64,6 @@ fun MainApplication(
     val goActivities: () -> Unit = {
         navController.navigate(Destinations.Activities.name)
     }
-
     val goDetail: (Int) -> Unit = { id ->
         navController.navigate("${Destinations.ActivityDetail.name}/$id")
     }
@@ -67,27 +74,27 @@ fun MainApplication(
         navController.navigate(Destinations.AboutUs.name)
     }
 
+    // Determine the navigation type based on the window size
     val navigationType: AppNavigationType
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {
             navigationType = AppNavigationType.BOTTOM_NAVIGATION
         }
-
         WindowWidthSizeClass.Medium -> {
             navigationType = AppNavigationType.NAVIGATION_RAIL
         }
-
         WindowWidthSizeClass.Expanded -> {
             navigationType = AppNavigationType.PERMANENT_NAVIGATION_DRAWER
         }
-
         else -> {
             navigationType = AppNavigationType.BOTTOM_NAVIGATION
         }
     }
 
+    // Scaffold composable that defines the overall structure of the app
     Scaffold(
         topBar = {
+            // Show top bar only for BOTTOM_NAVIGATION
             if (navigationType == AppNavigationType.BOTTOM_NAVIGATION) {
                 TopNavBar(
                     {
@@ -95,7 +102,7 @@ fun MainApplication(
                             IconButton(onClick = { navController.popBackStack() }) {
                                 Icon(
                                     Icons.Filled.ArrowBack,
-                                    contentDescription = "Ga terug"
+                                    contentDescription = "Go back"
                                 )
                             }
                         }
@@ -103,9 +110,9 @@ fun MainApplication(
                     onAbout = { navController.navigate(Destinations.AboutUs.name) },
                 )
             }
-
         },
         bottomBar = {
+            // Show bottom bar only for BOTTOM_NAVIGATION
             if (navigationType == AppNavigationType.BOTTOM_NAVIGATION) {
                 BottomAppBar(
                     onHome = goHome,
@@ -116,14 +123,17 @@ fun MainApplication(
         },
     ) { innerPadding ->
         Row {
+            // Navigation rail for MEDIUM and PERMANENT_NAVIGATION_DRAWER
             if (navigationType == AppNavigationType.NAVIGATION_RAIL || navigationType == AppNavigationType.PERMANENT_NAVIGATION_DRAWER) {
                 RailAppNavigation(
                     onHome = goHome,
-                    onActivities  = goActivities,
+                    onActivities = goActivities,
                     onAboutUs = goAboutUs,
                     currentBackStackEntry = currentBackStackEntry?.destination?.route,
                 )
             }
+
+            // NavHost for handling different destinations/screens
             NavHost(
                 navController = navController,
                 startDestination = Destinations.Start.name,
@@ -143,7 +153,6 @@ fun MainApplication(
                         Text("Invalid activity ID")
                     }
                 }
-
                 composable("${Destinations.ActivityDetail.name}/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
                     if (id != null) {
@@ -151,10 +160,10 @@ fun MainApplication(
                         if (activity != null) {
                             ActivityDetail(activity = activity, goRegistration = goReservation)
                         } else {
-                            Text("Activity niet gevonden voor ID: $id")
+                            Text("Activity not found for ID: $id")
                         }
                     } else {
-                        Text("Ongeldig activity ID")
+                        Text("Invalid activity ID")
                     }
                 }
                 composable(route = Destinations.AboutUs.name) {

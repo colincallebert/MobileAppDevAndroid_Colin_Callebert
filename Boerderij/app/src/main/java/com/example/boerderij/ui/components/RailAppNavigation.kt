@@ -22,6 +22,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.example.boerderij.R
 
+/**
+ * Composable function for the railnavigation.
+ *
+ * @param onHome The action to perform when the home icon is clicked.
+ * @param onActivities The action to perform when the activities icon is clicked.
+ * @param onAboutUs The action to perform when the about us icon is clicked.
+ * @param currentBackStackEntry The current back stack entry.
+ */
 @Composable
 fun RailAppNavigation(
     onHome: () -> Unit,
@@ -29,8 +37,9 @@ fun RailAppNavigation(
     onAboutUs: () -> Unit,
     currentBackStackEntry: String?,
 ) {
-
+    // Define the NavigationRail
     NavigationRail {
+        // NavigationRailItem for Home destination
         NavigationRailItem(
             selected = currentBackStackEntry == Destinations.Start.name,
             onClick = onHome,
@@ -41,6 +50,8 @@ fun RailAppNavigation(
                 )
             }
         )
+
+        // NavigationRailItem for Activities destination
         NavigationRailItem(
             selected = currentBackStackEntry == Destinations.Activities.name,
             onClick = onActivities,
@@ -51,6 +62,8 @@ fun RailAppNavigation(
                 )
             }
         )
+
+        // NavigationRailItem for AboutUs destination
         NavigationRailItem (
             selected = currentBackStackEntry == Destinations.AboutUs.name,
             onClick = onAboutUs,

@@ -30,28 +30,38 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.boerderij.model.activity.Activity
-import com.example.boerderij.ui.components.Function
+import com.example.boerderij.ui.components.ActivityCard
 
-
+/**
+ * Composable function for the Homepage.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Homepage(activities: List<Activity>,  goDetail: (Int) -> Unit) {
+fun Homepage(activities: List<Activity>, goDetail: (Int) -> Unit) {
+    // State for handling the search text
     var searchText by remember { mutableStateOf("") }
+
+    // LazyColumn containing the homepage content and be able to scroll
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        // Item displaying the description
         item {
             Discription()
         }
+
+        // Item containing the search bar
         item {
             OutlinedTextField(
                 value = searchText,
+                // Update the search text on input change
                 onValueChange = {
                     searchText = it
                 },
                 placeholder = { Text("Filter op activiteit") },
+                // Adding Icon and styling to be like Material Design
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -69,23 +79,20 @@ fun Homepage(activities: List<Activity>,  goDetail: (Int) -> Unit) {
                 shape = RoundedCornerShape(24.dp)
             )
         }
+
+        // Items displaying the filtered activities
         items(activities.filter { it.title.contains(searchText, ignoreCase = true) }) { activity ->
-            Function(
+            ActivityCard(
                 activity = activity,
                 goDetail = { id ->
                     goDetail(id)
-
                 }
             )
-            Spacer(modifier = Modifier
-                .height(8.dp)
+            // Spacer to add space between activity cards
+            Spacer(
+                modifier = Modifier
+                    .height(8.dp)
             )
         }
     }
-}
-
-
-@Composable
-@Preview
-fun ActivitiesPagePreview() {
 }

@@ -21,31 +21,38 @@ import androidx.compose.ui.unit.dp
 import com.example.boerderij.data.RetrofitInstance
 import com.example.boerderij.modelview.ActivityController
 
-
+/**
+ * Composable function for the Activity Form.
+ */
 @Composable
 fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
+    // State variables for user input
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var numberOfPeople by remember { mutableStateOf(1) }
 
+    // State variable to handle the toggle for activity registration
     var toggle by remember { mutableStateOf(false) }
 
+    // Check and perform action based on toggle state
     if (toggle) {
         registerActivity(id, numberOfPeople)
         toggle = false
     }
 
+    // Column displaying the activity reservation form
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
         Text(
-            text = "Resevatie maken",
+            text = "Reservatie maken",
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.headlineMedium
         )
 
+        // Input field for user's name
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
@@ -55,6 +62,7 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
                 .padding(bottom = 8.dp)
         )
 
+        // Input field for user's email
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -64,6 +72,7 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
                 .padding(bottom = 8.dp)
         )
 
+        // Input field for the number of people
         OutlinedTextField(
             value = numberOfPeople.toString(),
             onValueChange = { numberOfPeople = it.toIntOrNull() ?: 1 },
@@ -74,6 +83,7 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
                 .padding(bottom = 8.dp)
         )
 
+        // Button to submit the reservation and navigate to the activity detail
         Button(
             onClick = {
                 toggle = true
@@ -90,8 +100,8 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
 
 @Composable
 fun registerActivity(id: Int, numberOfPeople: Int) {
+    // LaunchedEffect to asynchronously register the activity
     LaunchedEffect(Unit) {
         ActivityController().registreren(id, numberOfPeople)
-
     }
 }
