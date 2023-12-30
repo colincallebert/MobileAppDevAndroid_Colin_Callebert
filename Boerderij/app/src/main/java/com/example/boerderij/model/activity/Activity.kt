@@ -1,4 +1,5 @@
 package com.example.boerderij.model.activity
+
 import kotlinx.serialization.Serializable
 
 /**

@@ -1,6 +1,5 @@
 package com.example.boerderij.modelview
 
-import android.telephony.mbms.MbmsErrors.GeneralErrors
 import com.example.boerderij.data.RetrofitInstance
 import com.example.boerderij.model.activity.Activity
 import com.example.boerderij.model.registration.Registration
@@ -22,7 +21,7 @@ class ActivityController {
 
     suspend fun getActivities(): List<Activity> {
         try {
-           return RetrofitInstance.apiService.getActivities().items
+            return RetrofitInstance.apiService.getActivities().items
         } catch (e: Exception) {
             return emptyList()
             //throw GeneralErrors.ActivityError(e)

@@ -21,14 +21,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.boerderij.R
 import com.example.boerderij.model.activity.Activity
 import com.example.boerderij.modelview.ActivityController
@@ -112,7 +110,7 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
             // Button for registration or cancellation based on availability
             if (activity.amount == 0) {
                 Button(
-                    onClick = { goRegistration(activity.id) } ,
+                    onClick = { goRegistration(activity.id) },
                     modifier = Modifier
                         .padding(8.dp)
                         .testTag("${stringResource(R.string.form)}")
@@ -124,9 +122,9 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
-            }  else {
+            } else {
                 Button(
-                    onClick = {  toggle = true } ,
+                    onClick = { toggle = true },
                     modifier = Modifier.padding(8.dp)
                 ) {
                     Text(

@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
 )
 abstract class AppDatabase : RoomDatabase() {
 
-        abstract fun activityDao(): ActivityDao
+    abstract fun activityDao(): ActivityDao
 
     companion object {
         @Volatile

@@ -2,9 +2,6 @@ package com.example.boerderij.network.activityApi
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.serialization.Serializable
 
 @JsonClass(generateAdapter = true)
 data class ApiActivityResponse(
@@ -12,6 +9,7 @@ data class ApiActivityResponse(
     val items: List<Activity>,
     val count: Int
 )
+
 @JsonClass(generateAdapter = true)
 data class Activity(
     val id: Int,
