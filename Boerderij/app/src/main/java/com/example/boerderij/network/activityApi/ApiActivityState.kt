@@ -33,7 +33,7 @@ sealed interface ActivityDetailApiState {
      *
      * @property activity An optional [ActivityDetail] object containing detailed information about a medical activity.
      */
-    data class Success(val activity: Activity?) : ActivityDetailApiState
+    data class Success(val activity: Activity) : ActivityDetailApiState
 
     /**
      * Represents an error state of an API call for activity details, indicating that an error occurred during the process.

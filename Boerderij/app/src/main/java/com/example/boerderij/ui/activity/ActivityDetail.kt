@@ -216,16 +216,14 @@ fun ActivityDetail(id: Int,  activityViewModel: ActivityViewModel = viewModel(fa
             is ActivityDetailApiState.Error -> {
                 Text(text = stringResource(R.string.error))
             }
+
             is ActivityDetailApiState.Loading -> {
                 Text(text = stringResource(R.string.loading))
             }
+
             is ActivityDetailApiState.Success -> {
-                activityDetailApiState.activity?.let { activity ->
-                    ActivityCard(activity, goRegistration = { id ->
-                        goRegistration(id)
-                    }
-                    )
-                }
+                ActivityCard(activityDetailApiState.activity, goRegistration)
             }
-    }
+        }
+
 }

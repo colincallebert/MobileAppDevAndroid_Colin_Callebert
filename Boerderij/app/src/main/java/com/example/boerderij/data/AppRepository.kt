@@ -23,7 +23,7 @@ interface AppRepository {
     fun getActivities(): Flow<List<Activity>>
     suspend fun insertActivity(activity: Activity)
     suspend fun refreshActivities()
-    suspend fun getActivityById(id: Int): Activity?
+    suspend fun getActivityById(id: Int): Activity
 }
 
 /**
@@ -64,7 +64,7 @@ class CachingAppRepository(
         activityDao.insertActivity(activity.asDbActivity())
     }
 
-    override suspend fun getActivityById(id: Int): Activity? {
+    override suspend fun getActivityById(id: Int): Activity {
         return apiService.getActivityDetailById(id).asDomainObject()
     }
 
