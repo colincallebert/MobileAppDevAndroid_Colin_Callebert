@@ -177,7 +177,7 @@ fun formattedDate(dateString: String): String {
         Date()
     }
 
-    val dateFormatter2 = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+    val dateFormatter2 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return dateFormatter2.format(date)
 }
 
@@ -203,13 +203,14 @@ fun formattedTimeRange(startTime: String, endTime: String): String {
         Date()
     }
 
-    val dateFormatter2 = SimpleDateFormat("hh:mm a", Locale.getDefault())
+    val dateFormatter24 = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-    val startTimeString = dateFormatter2.format(startTimeDate)
-    val endTimeString = dateFormatter2.format(endTimeDate)
+    val startTimeString = dateFormatter24.format(startTimeDate)
+    val endTimeString = dateFormatter24.format(endTimeDate)
 
     return "$startTimeString - $endTimeString"
 }
+
 @Composable
 fun ActivityDetail(id: Int,  activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory), goRegistration: (Int) -> Unit)
 {

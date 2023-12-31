@@ -47,6 +47,7 @@ fun BottomAppBar(
                     Icon(
                         imageVector = Icons.Filled.Home,
                         contentDescription = stringResource(R.string.go_to_home),
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             )
