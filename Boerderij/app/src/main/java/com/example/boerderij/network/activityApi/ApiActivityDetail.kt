@@ -2,28 +2,27 @@ package com.example.boerderij.network.activityApi
 
 import kotlinx.serialization.Serializable
 
-@Serializable
 data class ApiActivityResponseDetail(
-    val activity: ActivityDetail
+    val activity: Activity
 )
 
 @Serializable
-data class ActivityDetail(
+data class Detail(
     val id: Int,
     val title: String,
-    val starttme: String,
+    val starttime: String,
     val endtime: String,
     val description: String,
     val maxregistrations: Int,
-    var amount: Int
+    val amount: Int
 )
 
-fun ApiActivityResponseDetail.asDomainObject(): ActivityDetail {
+fun ApiActivityResponseDetail.asDomainObject(): Activity {
     return this.activity.let {
-        ActivityDetail(
+        Activity(
             id = it.id,
             title = it.title,
-            starttme = it.starttme,
+            starttime = it.starttime,
             endtime = it.endtime,
             description = it.description,
             maxregistrations = it.maxregistrations,

@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Boerderij"
+rootProject.name = "Template Application"
 include(":app")

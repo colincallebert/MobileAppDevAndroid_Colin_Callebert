@@ -21,6 +21,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,8 +32,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.boerderij.R
-import com.example.boerderij.model.activity.Activity
+import com.example.boerderij.network.activityApi.ActivitiesApiState
+import com.example.boerderij.network.activityApi.Activity
+import com.example.boerderij.viewmodel.ActivityViewModel
 
 /**
  * Composable function for the Activities screen.
@@ -98,10 +103,11 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
 }
 
 @Composable
-fun Activities(activities: List<Activity>, goDetail: (Int) -> Unit) {
+fun Activities( goDetail: (Int) -> Unit, activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)) {
+    val uiActivityListState by activityViewModel.uiActivityListState.collectAsState()
     // Displaying a list of activities using LazyColumn
     LazyColumn(modifier = Modifier.padding(top = 8.dp)) {
-        items(activities) { activity ->
+        items(uiActivityListState.activityList) { activity ->
             // Displaying individual activity items
             ActivityList(activity, goDetail)
         }

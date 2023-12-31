@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.boerderij.R
-import com.example.boerderij.model.activity.Activity
+import com.example.boerderij.network.activityApi.Activity
 
 /**
  * Composable function for the Activity Card.

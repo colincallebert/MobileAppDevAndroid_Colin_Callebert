@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -24,7 +25,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.boerderij.R
 import com.example.boerderij.model.activity.Activity
-import com.example.boerderij.modelview.ActivityController
 import com.example.boerderij.ui.aboutUs.AboutUs
 import com.example.boerderij.ui.activity.Activities
 import com.example.boerderij.ui.activity.ActivityDetail
@@ -42,15 +42,6 @@ fun MainApplication(
     // Retrieve the current back stack entry and check if it is the start destination
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isStartDestination = currentBackStackEntry?.destination?.route == Destinations.Start.name
-
-    // State to hold the list of activities
-    var data by remember { mutableStateOf(emptyList<Activity>()) }
-
-    // Fetch activities from the server when the composable is launched
-    LaunchedEffect(Unit) {
-        var activities = ActivityController().getActivities()
-        data = activities
-    }
 
     // Lambda functions for navigation actions
     val goHome: () -> Unit = {
@@ -104,6 +95,7 @@ fun MainApplication(
                                 Icon(
                                     Icons.Filled.ArrowBack,
                                     contentDescription = stringResource(R.string.go_back),
+                                    tint = MaterialTheme.colorScheme.primary,
                                 )
                             }
                         }
@@ -141,10 +133,10 @@ fun MainApplication(
                 Modifier.padding(innerPadding),
             ) {
                 composable(route = Destinations.Start.name) {
-                    Homepage(activities = data, goDetail = goDetail)
+                    Homepage( goDetail = goDetail)
                 }
                 composable(route = Destinations.Activities.name) {
-                    Activities(activities = data, goDetail = goDetail)
+                    Activities(goDetail = goDetail)
                 }
                 composable(route = "${Destinations.ActivityRegistration.name}/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
@@ -155,18 +147,11 @@ fun MainApplication(
                     }
                 }
                 composable("${Destinations.ActivityDetail.name}/{id}") { backStackEntry ->
-                    val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
-                    if (id != null) {
-                        val activity = data.firstOrNull { it.id == id }
-                        if (activity != null) {
-                            ActivityDetail(activity = activity, goRegistration = goReservation)
-                        } else {
-                            Text("Activity not found for ID: $id")
-                        }
-                    } else {
-                        Text("Invalid activity ID")
-                    }
+                    val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+                    ActivityDetail(id = id, goRegistration = goReservation)
                 }
+
+
                 composable(route = Destinations.AboutUs.name) {
                     AboutUs()
                 }

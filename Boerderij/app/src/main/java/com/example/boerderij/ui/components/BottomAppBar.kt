@@ -7,6 +7,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.boerderij.R
@@ -36,11 +37,16 @@ fun BottomAppBar(
                 selected = currentBackStackEntry == Destinations.Start.name,
                 // Define the action to perform when clicked
                 onClick = onHome,
+                // Label for the home screen
+                label = {
+                    Text("Home")
+                },
+
                 // Icon for the home screen
                 icon = {
                     Icon(
                         imageVector = Icons.Filled.Home,
-                        contentDescription = stringResource(R.string.go_to_home)
+                        contentDescription = stringResource(R.string.go_to_home),
                     )
                 }
             )
@@ -51,11 +57,16 @@ fun BottomAppBar(
                 selected = currentBackStackEntry == Destinations.Activities.name,
                 // Define the action to perform when clicked
                 onClick = onActivities,
+                // Label for the activities screen
+                label = {
+                    Text("Activiteiten")
+                },
                 // Icon for the activities screen
                 icon = {
                     Icon(
                         imageVector = Icons.Filled.List,
-                        contentDescription = stringResource(R.string.go_to_activities)
+                        contentDescription = stringResource(R.string.go_to_activities),
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             )

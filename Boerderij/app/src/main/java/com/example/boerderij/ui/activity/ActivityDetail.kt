@@ -27,9 +27,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.boerderij.R
-import com.example.boerderij.model.activity.Activity
-import com.example.boerderij.modelview.ActivityController
+import com.example.boerderij.network.activityApi.Activity
+import com.example.boerderij.network.activityApi.ActivityDetailApiState
+import com.example.boerderij.viewmodel.ActivityViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -38,7 +40,7 @@ import java.util.Locale
  * Composable function for the Activity Detail screen.
  */
 @Composable
-fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
+fun ActivityCard(activity: Activity, goRegistration: (Int) -> Unit) {
     // Extracting image name and longdescription from the activity description (format: "shortdescription|image|longdescription")
     var imageName = activity.description.split("|")[1]
     var imageResourceId = getImageResourceId(imageName)
@@ -143,7 +145,7 @@ fun ActivityDetail(activity: Activity, goRegistration: (Int) -> Unit) {
 fun verwijderActivity(id: Int) {
     // LaunchedEffect to asynchronously delete the activity registration
     LaunchedEffect(Unit) {
-        ActivityController().deleteRegistration(id)
+        //ActivityController().deleteRegistration(id)
     }
 }
 
@@ -204,4 +206,26 @@ fun formattedTimeRange(startTime: String, endTime: String): String {
     val endTimeString = dateFormatter2.format(endTimeDate)
 
     return "$startTimeString - $endTimeString"
+}
+@Composable
+fun ActivityDetail(id: Int,  activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory), goRegistration: (Int) -> Unit)
+    {
+    activityViewModel.getActivityDetail(id)
+
+        when (val activityDetailApiState = activityViewModel.activityDetailApiState) {
+            is ActivityDetailApiState.Error -> {
+                Text(text = stringResource(R.string.error))
+            }
+            is ActivityDetailApiState.Loading -> {
+                Text(text = stringResource(R.string.loading))
+            }
+            is ActivityDetailApiState.Success -> {
+                activityDetailApiState.activity?.let { activity ->
+                    ActivityCard(activity, goRegistration = { id ->
+                        goRegistration(id)
+                    }
+                    )
+                }
+            }
+    }
 }

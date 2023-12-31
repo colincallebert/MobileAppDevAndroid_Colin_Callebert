@@ -1,6 +1,8 @@
 package com.example.boerderij.ui.homepage
 
+//import Discription
 import Discription
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,9 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,40 +28,45 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.boerderij.model.activity.Activity
-import com.example.boerderij.ui.components.ActivityCard
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.boerderij.network.activityApi.Activity
+import com.example.boerderij.ui.components.Function
+import com.example.boerderij.viewmodel.ActivityViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.res.stringResource
+import com.example.boerderij.R
+import com.example.boerderij.network.activityApi.ActivitiesApiState
 
-/**
- * Composable function for the Homepage.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Homepage(activities: List<Activity>, goDetail: (Int) -> Unit) {
-    // State for handling the search text
+fun Homepage(goDetail: (Int) -> Unit
+,activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
+             ) {
     var searchText by remember { mutableStateOf("") }
 
-    // LazyColumn containing the homepage content and be able to scroll
+
+    val uiActivityListState by activityViewModel.uiActivityListState.collectAsState()
+    val activityApiState = activityViewModel.activityApiState
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Item displaying the description
         item {
             Discription()
         }
-
-        // Item containing the search bar
         item {
             OutlinedTextField(
                 value = searchText,
-                // Update the search text on input change
                 onValueChange = {
                     searchText = it
                 },
                 placeholder = { Text("Filter op activiteit") },
-                // Adding Icon and styling to be like Material Design
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -68,27 +77,40 @@ fun Homepage(activities: List<Activity>, goDetail: (Int) -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                colors = OutlinedTextFieldDefaults.colors(
+                colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Gray,
                     unfocusedBorderColor = Color.Gray,
                 ),
                 shape = RoundedCornerShape(24.dp)
             )
         }
+        when (activityApiState) {
+            // Display error text when there is an error fetching news
+            is ActivitiesApiState.Error -> {
 
-        // Items displaying the filtered activities
-        items(activities.filter { it.title.contains(searchText, ignoreCase = true) }) { activity ->
-            ActivityCard(
-                activity = activity,
-                goDetail = { id ->
-                    goDetail(id)
+            }
+
+            // Display loading text while fetching news
+            is ActivitiesApiState.Loading -> {
+
+            }
+
+            // Display the news list when data is successfully fetched
+            is ActivitiesApiState.Success -> {
+                items(uiActivityListState.activityList) { activity ->
+                    Function(
+                        activity = activity,
+                        goDetail = { id ->
+                            goDetail(id)
+
+                        }
+                    )
+                    Spacer(modifier = Modifier
+                        .height(8.dp)
+                    )
                 }
-            )
-            // Spacer to add space between activity cards
-            Spacer(
-                modifier = Modifier
-                    .height(8.dp)
-            )
+            }
         }
+
     }
 }

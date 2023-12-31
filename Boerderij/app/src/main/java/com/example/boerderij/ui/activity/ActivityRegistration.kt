@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.boerderij.modelview.ActivityController
 
 /**
  * Composable function for the Activity Form.
@@ -101,6 +100,6 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
 fun registerActivity(id: Int, numberOfPeople: Int) {
     // LaunchedEffect to asynchronously register the activity
     LaunchedEffect(Unit) {
-        ActivityController().registreren(id, numberOfPeople)
+        //ActivityController().registreren(id, numberOfPeople)
     }
 }
