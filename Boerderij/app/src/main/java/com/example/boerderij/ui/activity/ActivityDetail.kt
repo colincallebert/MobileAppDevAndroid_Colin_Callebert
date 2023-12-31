@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.boerderij.R
+import com.example.boerderij.network.activityApi.ActivitiesApiState
 import com.example.boerderij.network.activityApi.Activity
 import com.example.boerderij.network.activityApi.ActivityDetailApiState
 import com.example.boerderij.viewmodel.ActivityViewModel
@@ -209,21 +211,27 @@ fun formattedTimeRange(startTime: String, endTime: String): String {
 }
 @Composable
 fun ActivityDetail(id: Int,  activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory), goRegistration: (Int) -> Unit)
-    {
-    activityViewModel.getActivityDetail(id)
+{
+    val uiActivityListState by activityViewModel.uiActivityListState.collectAsState()
+    val activityApiState = activityViewModel.activityApiState
 
-        when (val activityDetailApiState = activityViewModel.activityDetailApiState) {
-            is ActivityDetailApiState.Error -> {
-                Text(text = stringResource(R.string.error))
-            }
 
-            is ActivityDetailApiState.Loading -> {
-                Text(text = stringResource(R.string.loading))
-            }
+    when (activityApiState) {
+        is ActivitiesApiState.Error -> {
+            Text(text = stringResource(R.string.error))
+        }
 
-            is ActivityDetailApiState.Success -> {
-                ActivityCard(activityDetailApiState.activity, goRegistration)
+        is ActivitiesApiState.Loading -> {
+            Text(text = stringResource(R.string.loading))
+        }
+
+        is ActivitiesApiState.Success -> {
+            val activity = uiActivityListState.activityList.find { activity -> activity.id == id }
+            if (activity != null) {
+                // Activity found, execute ActivityCard
+                ActivityCard(activity, goRegistration)
             }
         }
+    }
 
 }

@@ -4,6 +4,7 @@ import com.example.boerderij.network.activityApi.ApiActivityResponse
 import com.example.boerderij.network.activityApi.ApiActivityResponseDetail
 import kotlinx.coroutines.flow.flow
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 /**
@@ -20,6 +21,9 @@ interface ApiService {
 
     @GET("activities/{id}")
     suspend fun getActivityDetailById(@Path("id") id: Int): ApiActivityResponseDetail
+
+    //@POST("registrations/{id}")
+    //suspend fun registerForActivity(@Path("id") id: Int)
 
 }
 

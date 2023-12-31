@@ -1,6 +1,5 @@
 package com.example.boerderij.ui.homepage
 
-//import Discription
 import Discription
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
@@ -39,13 +38,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.stringResource
 import com.example.boerderij.R
 import com.example.boerderij.network.activityApi.ActivitiesApiState
-
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Homepage(goDetail: (Int) -> Unit
-,activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
-             ) {
+             ,activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
+) {
     var searchText by remember { mutableStateOf("") }
 
 
@@ -90,19 +89,21 @@ fun Homepage(goDetail: (Int) -> Unit
 
             }
 
-            // Display loading text while fetching news
             is ActivitiesApiState.Loading -> {
 
             }
 
             // Display the news list when data is successfully fetched
             is ActivitiesApiState.Success -> {
-                items(uiActivityListState.activityList) { activity ->
+                val filteredActivities = uiActivityListState.activityList.filter { activity ->
+                    activity.title.contains(searchText, ignoreCase = true)
+                }
+
+                items(filteredActivities) { activity ->
                     Function(
                         activity = activity,
                         goDetail = { id ->
                             goDetail(id)
-
                         }
                     )
                     Spacer(modifier = Modifier

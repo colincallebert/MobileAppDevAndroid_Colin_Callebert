@@ -1,9 +1,10 @@
 package com.example.boerderij.network.activityApi
 
 import kotlinx.serialization.Serializable
+import com.example.boerderij.model.activity.ActivityDetail
 
 data class ApiActivityResponseDetail(
-    val activity: Activity
+    val activity: ActivityDetail
 )
 
 @Serializable
@@ -17,9 +18,9 @@ data class Detail(
     val amount: Int
 )
 
-fun ApiActivityResponseDetail.asDomainObject(): Activity {
+fun ApiActivityResponseDetail.asDomainObject(): ActivityDetail {
     return this.activity.let {
-        Activity(
+        ActivityDetail(
             id = it.id,
             title = it.title,
             starttime = it.starttime,
