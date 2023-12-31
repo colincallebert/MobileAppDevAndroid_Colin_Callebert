@@ -4,6 +4,7 @@ import com.example.boerderij.data.database.ActivityDao
 import com.example.boerderij.data.database.asDbActivity
 import com.example.boerderij.data.database.asDomainActivities
 import com.example.boerderij.model.activity.ActivityDetail
+import com.example.boerderij.model.registration.Registration
 
 import com.example.boerderij.network.activityApi.ApiActivityResponseDetail
 import com.example.boerderij.network.ApiService
@@ -25,6 +26,8 @@ interface AppRepository {
     suspend fun insertActivity(activity: Activity)
     suspend fun refreshActivities()
     suspend fun getActivityById(id: Int): ActivityDetail
+    suspend fun createRegistration(registration: Registration): Registration
+    suspend fun deleteRegistration(id: Int): Registration
 }
 
 /**
@@ -67,6 +70,12 @@ class CachingAppRepository(
 
     override suspend fun getActivityById(id: Int): ActivityDetail {
         return apiService.getActivityDetailById(id).asDomainObject()
+    }
+    override suspend fun createRegistration(registration: Registration): Registration {
+        return apiService.createRegistration(registration)
+    }
+    override suspend fun deleteRegistration(id: Int): Registration {
+        return apiService.deleteRegistration(id)
     }
 
 

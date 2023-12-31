@@ -1,8 +1,11 @@
 package com.example.boerderij.network
 
+import com.example.boerderij.model.registration.Registration
 import com.example.boerderij.network.activityApi.ApiActivityResponse
 import com.example.boerderij.network.activityApi.ApiActivityResponseDetail
 import kotlinx.coroutines.flow.flow
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -22,8 +25,11 @@ interface ApiService {
     @GET("activities/{id}")
     suspend fun getActivityDetailById(@Path("id") id: Int): ApiActivityResponseDetail
 
-    //@POST("registrations/{id}")
-    //suspend fun registerForActivity(@Path("id") id: Int)
+    @POST("registrations")
+    suspend fun createRegistration(@Body registration: Registration): Registration
+
+    @DELETE("registrations/{id}")
+    suspend fun deleteRegistration(@Path("id") id: Int): Registration
 
 }
 

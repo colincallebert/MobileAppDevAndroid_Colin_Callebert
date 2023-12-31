@@ -18,6 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.boerderij.viewmodel.ActivityViewModel
 
 /**
  * Composable function for the Activity Form.
@@ -98,8 +100,8 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
 
 @Composable
 fun registerActivity(id: Int, numberOfPeople: Int) {
-    // LaunchedEffect to asynchronously register the activity
-    LaunchedEffect(Unit) {
-        //ActivityController().registreren(id, numberOfPeople)
+    val activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
+    LaunchedEffect(key1 = id, key2 = numberOfPeople) {
+        activityViewModel.registreren(id, numberOfPeople)
     }
 }

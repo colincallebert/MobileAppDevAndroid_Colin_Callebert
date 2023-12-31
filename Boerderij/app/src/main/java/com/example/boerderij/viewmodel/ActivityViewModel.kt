@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.boerderij.AppApplication
 import com.example.boerderij.data.AppRepository
+import com.example.boerderij.model.registration.Registration
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -78,16 +79,39 @@ class ActivityViewModel(
         }
     }
 
-    fun getActivityDetail(id: Int) {
-        viewModelScope.launch {
-            try {
-                val result = appRepository.getActivityById(id)
-                activityDetailApiState = ActivityDetailApiState.Success(result)
-            } catch (e: Exception) {
-                activityDetailApiState = ActivityDetailApiState.Error
-            }
+    fun registreren(activityId: Int, amount: Int) {
+        val registration = Registration(
+            userid = 1,
+            activityid = activityId,
+            amount = amount
+        )
+        try {
+            viewModelScope.launch { appRepository.createRegistration(registration) }
+            viewModelScope.launch { appRepository.refreshActivities() }
+        } catch (e: Exception) {
+
         }
     }
+
+    fun deleteRegistration(id: Int) {
+        try {
+            viewModelScope.launch { appRepository.deleteRegistration(id) }
+            viewModelScope.launch { appRepository.refreshActivities() }
+        } catch (e: Exception) {
+
+        }
+    }
+
+//    fun getActivityDetail(id: Int) {
+//        viewModelScope.launch {
+//            try {
+//                val result = appRepository.getActivityById(id)
+//                activityDetailApiState = ActivityDetailApiState.Success(result)
+//            } catch (e: Exception) {
+//                activityDetailApiState = ActivityDetailApiState.Error
+//            }
+//        }
+//    }
 
 
     // Factory for creating instances of DoctorViewModel
