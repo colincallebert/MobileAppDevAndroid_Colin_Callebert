@@ -49,10 +49,6 @@ class ActivityViewModel(
     var activityApiState: ActivitiesApiState by mutableStateOf(ActivitiesApiState.Loading)
         private set
 
-    var activityDetailApiState: ActivityDetailApiState by mutableStateOf(ActivityDetailApiState.Loading)
-        private set
-
-
     init {
         getActivities()
     }
@@ -98,17 +94,6 @@ class ActivityViewModel(
 
         }
     }
-
-//    fun getActivityDetail(id: Int) {
-//        viewModelScope.launch {
-//            try {
-//                val result = appRepository.getActivityById(id)
-//                activityDetailApiState = ActivityDetailApiState.Success(result)
-//            } catch (e: Exception) {
-//                activityDetailApiState = ActivityDetailApiState.Error
-//            }
-//        }
-//    }
 
 
     // Factory for creating instances of DoctorViewModel
