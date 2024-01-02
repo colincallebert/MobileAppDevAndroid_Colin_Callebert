@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -44,7 +46,7 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
             emailError = "Email is verplicht"
             isValid = false
         }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailError = "Email is niet geldig"
             isValid = false
         }
@@ -57,9 +59,9 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
 
     // Check and perform action based on toggle state
     if (toggle) {
-            registerActivity(id, numberOfPeople)
-            goDetail(id)
-            toggle = false
+        registerActivity(id, numberOfPeople)
+        goDetail(id)
+        toggle = false
     }
 
     // Column displaying the activity reservation form
@@ -109,7 +111,11 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
                 .padding(bottom = 8.dp)
         )
         if (emailError != null) {
-            Text(text = emailError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = emailError!!,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
         } else {
             Text(text = "*Email is verplicht", style = MaterialTheme.typography.bodySmall)
         }
@@ -129,7 +135,11 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
                 .padding(bottom = 8.dp)
         )
         if (numberOfPeopleError != null) {
-            Text(text = numberOfPeopleError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = numberOfPeopleError!!,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
         } else {
             Text(text = "*Aantal is verplicht ", style = MaterialTheme.typography.bodySmall)
         }
@@ -142,14 +152,14 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(top = 16.dp)
+                .widthIn(min = 200.dp),
+            shape = MaterialTheme.shapes.small
         ) {
             Text(text = "Reservatie maken")
         }
     }
 }
-
 
 
 @Composable

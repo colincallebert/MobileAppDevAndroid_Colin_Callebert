@@ -1,6 +1,5 @@
 package com.example.boerderij.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,6 +12,9 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.boerderij.AppApplication
 import com.example.boerderij.data.AppRepository
 import com.example.boerderij.model.registration.Registration
+import com.example.boerderij.network.activityApi.ActivitiesApiState
+import com.example.boerderij.network.activityApi.ActivityDetailApiState
+import com.example.boerderij.network.activityApi.ActivityListState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,9 +24,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.net.SocketTimeoutException
-import com.example.boerderij.network.activityApi.ActivitiesApiState
-import com.example.boerderij.network.activityApi.ActivityDetailApiState
-import com.example.boerderij.network.activityApi.ActivityListState
 
 /**
  * ViewModel for managing doctor data within the application.

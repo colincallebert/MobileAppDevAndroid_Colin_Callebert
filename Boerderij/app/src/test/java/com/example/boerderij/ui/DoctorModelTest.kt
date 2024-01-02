@@ -32,6 +32,7 @@ class DoctorModelTest {
         // Assert
         Assert.assertEquals(expectedNewsApiState, viewModel.doctorsApiState)
     }
+
     @Test
     fun getNewsArticlesDetails_methodCall_StateIsSuccessAfterCall() {
 

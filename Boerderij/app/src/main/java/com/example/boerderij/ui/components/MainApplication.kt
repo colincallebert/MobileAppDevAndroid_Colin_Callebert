@@ -11,11 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -24,7 +20,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.boerderij.R
-import com.example.boerderij.model.activity.Activity
 import com.example.boerderij.ui.aboutUs.AboutUs
 import com.example.boerderij.ui.activity.Activities
 import com.example.boerderij.ui.activity.ActivityDetail
@@ -133,7 +128,7 @@ fun MainApplication(
                 Modifier.padding(innerPadding),
             ) {
                 composable(route = Destinations.Start.name) {
-                    Homepage( goDetail = goDetail)
+                    Homepage(goDetail = goDetail)
                 }
                 composable(route = Destinations.Activities.name) {
                     Activities(goDetail = goDetail)

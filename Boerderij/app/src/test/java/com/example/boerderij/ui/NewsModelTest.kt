@@ -31,14 +31,13 @@ class NewsModelTest {
         // Assert
         Assert.assertEquals(expectedNewsApiState, viewModel.newsApiState)
     }
+
     @Test
     fun getNewsArticlesDetails_methodCall_StateIsSuccessAfterCall() {
 
         viewModel.getNewsDetail(1)
 
     }
-
-
 
 
 }

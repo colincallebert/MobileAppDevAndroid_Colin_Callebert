@@ -2,7 +2,6 @@ package com.example.boerderij.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Group
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton

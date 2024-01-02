@@ -31,7 +31,7 @@ fun Discription() {
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF000000), // Black color
-            modifier = Modifier.padding(top = 40.dp)
+            modifier = Modifier.padding(top = 16.dp)
         )
 
         // Card containing description

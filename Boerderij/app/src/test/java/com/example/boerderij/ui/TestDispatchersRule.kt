@@ -1,19 +1,18 @@
 package com.example.boerderij.ui
 
 import kotlinx.coroutines.Dispatchers
-
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.runner.Description
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
 
 class TestDispatchersRule @OptIn(ExperimentalCoroutinesApi::class) constructor(
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
-): TestWatcher(){
+) : TestWatcher() {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun starting(description: Description) {
         super.starting(description)

@@ -16,13 +16,13 @@ object FakeDataSource {
             "author1",
             "description1",
 
-        ),
+            ),
         NewsArticle(
             2,
             "author2",
             "description2",
 
-        ),
+            ),
         NewsArticle(
             2,
             "author3",
@@ -117,19 +117,19 @@ object FakeDataSource {
             "High blood pressure",
             "Hypertension is a common condition in which the long-term force of the blood against your artery walls is high enough that it may eventually cause health problems.",
 
-        ),
+            ),
         Condition(
             2,
             "High blood sugar",
             "Diabetes is a chronic condition that affects how your body turns food into energy. There are three main types of diabetes: type 1, type 2, and gestational diabetes.",
 
-        ),
+            ),
         Condition(
             3,
             "Severe headache",
             "A migraine is a type of headache characterized by a throbbing or pulsating sensation, usually on one side of the head. It may be accompanied by nausea, vomiting, and sensitivity to light and sound.",
 
-        )
+            )
     )
 
     val symptoms = listOf(
@@ -157,8 +157,6 @@ object FakeDataSource {
             longDescription = "A migraine is a type of headache characterized by a throbbing or pulsating sensation, usually on one side of the head. It may be accompanied by nausea, vomiting, and sensitivity to light and sound."
         )
     )
-
-
 
 
 }

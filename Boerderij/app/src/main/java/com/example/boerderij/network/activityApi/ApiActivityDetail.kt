@@ -1,7 +1,7 @@
 package com.example.boerderij.network.activityApi
 
-import kotlinx.serialization.Serializable
 import com.example.boerderij.model.activity.ActivityDetail
+import kotlinx.serialization.Serializable
 
 data class ApiActivityResponseDetail(
     val activity: ActivityDetail

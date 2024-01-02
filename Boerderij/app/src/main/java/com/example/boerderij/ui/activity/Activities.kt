@@ -12,8 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Divider
@@ -34,7 +35,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.boerderij.R
-import com.example.boerderij.network.activityApi.ActivitiesApiState
 import com.example.boerderij.network.activityApi.Activity
 import com.example.boerderij.viewmodel.ActivityViewModel
 
@@ -96,20 +96,33 @@ fun ActivityList(activity: Activity, goDetail: (Int) -> Unit, modifier: Modifier
         }
 
         // Adding a divider between activity items
-        Divider(modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth())
+        Divider(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+        )
     }
 }
 
 @Composable
-fun Activities( goDetail: (Int) -> Unit, activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)) {
+fun Activities(
+    goDetail: (Int) -> Unit,
+    activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
+) {
     val uiActivityListState by activityViewModel.uiActivityListState.collectAsState()
-    // Displaying a list of activities using LazyColumn
-    LazyColumn(modifier = Modifier.padding(top = 8.dp)) {
+
+    // Displaying a list of activities using LazyVerticalGrid
+    LazyVerticalGrid(
+        modifier = Modifier.padding(top = 8.dp),
+        columns = GridCells.Adaptive(minSize = 500.dp)
+    ) {
         items(uiActivityListState.activityList) { activity ->
-            // Displaying individual activity items
-            ActivityList(activity, goDetail)
+            // Displaying individual activity items with added padding
+            ActivityList(
+                activity, goDetail, Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            )
         }
     }
 }

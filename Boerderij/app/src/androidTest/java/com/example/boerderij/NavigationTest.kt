@@ -6,7 +6,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
@@ -18,6 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 @RunWith(AndroidJUnit4::class)
 class NavigationTest {
 
@@ -43,14 +43,16 @@ class NavigationTest {
 
     @Test
     fun navigateToHomeScreen() {
-        composeTestRule.onNodeWithContentDiscripitionId(R.string.go_to_home)
+        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_home)
             .performClick()
     }
+
     @Test
     fun navigateToActivitiesScreen() {
-        composeTestRule.onNodeWithContentDiscripitionId(R.string.go_to_activities)
+        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_activities)
             .performClick()
     }
+
     @Test
     fun navigateToActivityFormScreen() {
         navigateToActivitiesScreen()
@@ -61,11 +63,13 @@ class NavigationTest {
         composeTestRule.onNodeWithTag("${"Ga naar form"}")
             .performClick()
     }
+
     @Test
     fun NavHost_verifyHomeButtonShownOnStartScreen() {
         val home = composeTestRule.activity.getString(R.string.go_to_home)
         composeTestRule.onNodeWithContentDescription(home).assertExists()
     }
+
     @Test
     fun NavHost_verifyActieButtonShownOnStartScreen() {
         val button = composeTestRule.activity.getString(R.string.go_to_activities)
@@ -77,17 +81,19 @@ class NavigationTest {
         val aboutus = composeTestRule.activity.getString(R.string.go_to_aboutus)
         composeTestRule.onNodeWithContentDescription(aboutus).assertExists()
     }
+
     @Test
     fun NavHost_clickOnActivities_navigatesToActivitiesPage() {
         navigateToHomeScreen()
-        composeTestRule.onNodeWithContentDiscripitionId(R.string.go_to_activities)
+        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_activities)
             .performClick()
         navController.assertCurrentRouteName(Destinations.Activities.name)
     }
+
     @Test
     fun NavHost_clickOnAboutUs_navigatesToAboutUsPage() {
         navigateToHomeScreen()
-        composeTestRule.onNodeWithContentDiscripitionId(R.string.go_to_aboutus)
+        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_aboutus)
             .performClick()
         navController.assertCurrentRouteName(Destinations.AboutUs.name)
     }
@@ -108,7 +114,7 @@ class NavigationTest {
         Thread.sleep(1000)
         navigateToActivitiesScreen()
         Thread.sleep(1000)
-        composeTestRule.onNodeWithContentDiscripitionId(R.string.go_back)
+        composeTestRule.onNodeWithContentDescriptionId(R.string.go_back)
             .performClick()
         navController.assertCurrentRouteName(Destinations.Start.name)
     }

@@ -21,7 +21,7 @@ data class DbActivity(
 )
 
 /**
-* Converts a network model Activity object to a database entity DbActivity.
+ * Converts a network model Activity object to a database entity DbActivity.
  * This function is useful for transforming data received from a network call into a format that can be stored locally.
  *
  * @return DbActivity The corresponding database entity with data from the Activity.

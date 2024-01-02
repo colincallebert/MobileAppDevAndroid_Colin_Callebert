@@ -32,6 +32,7 @@ class ConditionModelTest {
         // Assert
         Assert.assertEquals(expectedNewsApiState, viewModel.conditionApiState)
     }
+
     @Test
     fun getNewsArticlesDetails_methodCall_StateIsSuccessAfterCall() {
 
@@ -39,9 +40,6 @@ class ConditionModelTest {
 
 
     }
-
-
-
 
 
 }
