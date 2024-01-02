@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
@@ -43,13 +44,13 @@ class NavigationTest {
 
     @Test
     fun navigateToHomeScreen() {
-        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_home)
+        composeTestRule.onNodeWithText("Home")
             .performClick()
     }
 
     @Test
     fun navigateToActivitiesScreen() {
-        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_activities)
+        composeTestRule.onNodeWithText("Activiteiten")
             .performClick()
     }
 
@@ -66,14 +67,12 @@ class NavigationTest {
 
     @Test
     fun NavHost_verifyHomeButtonShownOnStartScreen() {
-        val home = composeTestRule.activity.getString(R.string.go_to_home)
-        composeTestRule.onNodeWithContentDescription(home).assertExists()
+        composeTestRule.onNodeWithText("Home").assertExists()
     }
 
     @Test
     fun NavHost_verifyActieButtonShownOnStartScreen() {
-        val button = composeTestRule.activity.getString(R.string.go_to_activities)
-        composeTestRule.onNodeWithContentDescription(button).assertExists()
+        composeTestRule.onNodeWithText("Activiteiten").assertExists()
     }
 
     @Test
@@ -85,7 +84,7 @@ class NavigationTest {
     @Test
     fun NavHost_clickOnActivities_navigatesToActivitiesPage() {
         navigateToHomeScreen()
-        composeTestRule.onNodeWithContentDescriptionId(R.string.go_to_activities)
+        composeTestRule.onNodeWithText("Activiteiten")
             .performClick()
         navController.assertCurrentRouteName(Destinations.Activities.name)
     }

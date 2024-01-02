@@ -86,7 +86,6 @@ class ActivityViewModel(
         )
         try {
             viewModelScope.launch { appRepository.createRegistration(registration) }
-            viewModelScope.launch { appRepository.refreshActivities() }
         } catch (e: Exception) {
 
         }
@@ -95,7 +94,6 @@ class ActivityViewModel(
     fun deleteRegistration(id: Int) {
         try {
             viewModelScope.launch { appRepository.deleteRegistration(id) }
-            viewModelScope.launch { appRepository.refreshActivities() }
         } catch (e: Exception) {
 
         }

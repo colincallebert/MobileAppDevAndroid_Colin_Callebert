@@ -166,6 +166,10 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
 fun registerActivity(id: Int, numberOfPeople: Int) {
     val activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
     LaunchedEffect(key1 = id, key2 = numberOfPeople) {
-        activityViewModel.registreren(id, numberOfPeople)
+        try {
+            activityViewModel.registreren(id, numberOfPeople)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

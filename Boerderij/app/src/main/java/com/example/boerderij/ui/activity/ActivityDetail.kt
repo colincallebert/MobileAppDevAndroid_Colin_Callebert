@@ -163,7 +163,7 @@ fun ActivityCard(activity: Activity, goRegistration: (Int) -> Unit) {
 fun verwijderActivity(id: Int) {
     // LaunchedEffect to asynchronously delete the activity registration
     val activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory)
-    LaunchedEffect(Unit) {
+    LaunchedEffect(id) {
         activityViewModel.deleteRegistration(id)
     }
 }
