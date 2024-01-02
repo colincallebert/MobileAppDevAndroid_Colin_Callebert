@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -18,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,7 +26,7 @@ import com.example.boerderij.viewmodel.ActivityViewModel
  * Composable function for the Activity Form.
  */
 @Composable
-fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
+fun ActivityReservation(id: Int, goActivities: () -> Unit) {
     // State variables for user input
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -60,7 +58,7 @@ fun ActivityReservation(id: Int, goDetail: (Int) -> Unit) {
     // Check and perform action based on toggle state
     if (toggle) {
         registerActivity(id, numberOfPeople)
-        goDetail(id)
+        goActivities()
         toggle = false
     }
 

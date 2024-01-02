@@ -38,18 +38,21 @@ fun Homepage(
 ) {
     var searchText by remember { mutableStateOf("") }
 
-
+    // Collect the UI state and activity list state from the ViewModel
     val uiActivityListState by activityViewModel.uiActivityListState.collectAsState()
     val activityApiState = activityViewModel.activityApiState
 
+    // Composable for displaying the UI
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        // Item for displaying a description
         item {
             Discription()
         }
+        // Item for displaying a search field
         item {
             OutlinedTextField(
                 value = searchText,
@@ -74,22 +77,35 @@ fun Homepage(
                 shape = RoundedCornerShape(24.dp)
             )
         }
+
+        // Display different content based on the API state
         when (activityApiState) {
-            // Display error text when there is an error fetching news
+            // Display error text when there is an error fetching activities
             is ActivitiesApiState.Error -> {
-
+                item {
+                    Text(
+                        text = "Error fetching activities",
+                        color = Color.Red
+                    )
+                }
             }
 
+            // Display a loading indicator when data is being fetched
             is ActivitiesApiState.Loading -> {
-
+                item {
+                    Text(
+                        text = "Loading activities..."
+                    )
+                }
             }
 
-            // Display the news list when data is successfully fetched
+            // Display the activities list when data is successfully fetched
             is ActivitiesApiState.Success -> {
                 val filteredActivities = uiActivityListState.activityList.filter { activity ->
                     activity.title.contains(searchText, ignoreCase = true)
                 }
 
+                // Display each activity using the Function Composable
                 items(filteredActivities) { activity ->
                     Function(
                         activity = activity,
@@ -104,6 +120,5 @@ fun Homepage(
                 }
             }
         }
-
     }
 }

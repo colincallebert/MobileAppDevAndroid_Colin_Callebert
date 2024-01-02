@@ -8,15 +8,23 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
+/**
+ * Interface defining the dependency container for the application.
+ */
 interface AppContainer {
     val appRepository: AppRepository
 }
 
+/**
+ * Default implementation of [AppContainer] providing instances of dependencies.
+ *
+ * @param context The application context.
+ */
 class DefaultAppContainer(
     private val context: Context
 ) : AppContainer {
-    private val BASE_URL =
-        "http://10.0.2.2:9000/api/"
+    // Base URL for the API.
+    private val BASE_URL = "http://10.0.2.2:9000/api/"
 
     // Configures Retrofit for networking, using Kotlin serialization for JSON processing.
     private val retrofit: Retrofit = Retrofit.Builder()

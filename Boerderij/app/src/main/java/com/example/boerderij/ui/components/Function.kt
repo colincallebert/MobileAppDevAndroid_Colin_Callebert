@@ -23,13 +23,19 @@ import androidx.compose.ui.unit.dp
 import com.example.boerderij.R
 import com.example.boerderij.network.activityApi.Activity
 
-
+/**
+ * Composable function representing a UI component for displaying information about an activity.
+ *
+ * @param activity The activity data to be displayed.
+ * @param goDetail Callback function to navigate to the detail screen for the activity.
+ */
 @Composable
 fun Function(activity: Activity, goDetail: (Int) -> Unit) {
+    // Extract image name and resource ID from activity description
+    val imageName = activity.description.split("|")[1]
+    val imageResourceId = getImageResourceId(imageName)
+    val shortDescription = activity.description.split("|")[0]
 
-    var imageName = activity.description.split("|")[1]
-    var imageResourceId = getImageResourceId(imageName)
-    var shortdescription = activity.description.split("|")[0]
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,9 +48,8 @@ fun Function(activity: Activity, goDetail: (Int) -> Unit) {
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.inverseOnSurface)
                 .border(2.dp, Color(0xFFA9ACA5))
-        )
-        {
-
+        ) {
+            // Display the image with content scale set to crop
             Image(
                 painter = painterResource(id = imageResourceId),
                 contentDescription = null,
@@ -53,6 +58,7 @@ fun Function(activity: Activity, goDetail: (Int) -> Unit) {
                 contentScale = ContentScale.Crop
             )
 
+            // Display the title of the activity
             Text(
                 text = activity.title,
                 style = MaterialTheme.typography.headlineSmall,
@@ -61,22 +67,25 @@ fun Function(activity: Activity, goDetail: (Int) -> Unit) {
                 modifier = Modifier.padding(16.dp)
             )
 
-
+            // Display the short description of the activity
             Text(
-                text = shortdescription,
+                text = shortDescription,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(16.dp),
                 maxLines = Int.MAX_VALUE
-
             )
         }
     }
-
 }
 
+/**
+ * Gets the resource ID for the image based on the image name.
+ *
+ * @param imageName The name of the image.
+ * @return The resource ID of the image.
+ */
 private fun getImageResourceId(imageName: String): Int {
-    var resourceId = R.drawable::class.java.getField("${imageName}").getInt(null)
-
+    val resourceId = R.drawable::class.java.getField("${imageName}").getInt(null)
     return resourceId
 }

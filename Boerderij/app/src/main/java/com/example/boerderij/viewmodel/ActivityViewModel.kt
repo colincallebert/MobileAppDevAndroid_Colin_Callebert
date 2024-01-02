@@ -13,7 +13,6 @@ import com.example.boerderij.AppApplication
 import com.example.boerderij.data.AppRepository
 import com.example.boerderij.model.registration.Registration
 import com.example.boerderij.network.activityApi.ActivitiesApiState
-import com.example.boerderij.network.activityApi.ActivityDetailApiState
 import com.example.boerderij.network.activityApi.ActivityListState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,15 +25,15 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 
 /**
- * ViewModel for managing doctor data within the application.
- * It handles fetching and maintaining the state of the list of doctors and individual doctor details.
+ * ViewModel for managing activity data within the application.
+ * It handles fetching and maintaining the state of the list of activities.
  *
  * @property appRepository The repository to interact with the data layer of the application.
  */
 class ActivityViewModel(
     private val appRepository: AppRepository
 ) : ViewModel() {
-    // StateFlow to hold and emit UI state updates for the overview of doctors
+    // StateFlow to hold and emit UI state updates for the overview of activities
     private val _uiState = MutableStateFlow(
         ActivityState(
             listOf()
@@ -42,10 +41,10 @@ class ActivityViewModel(
     )
     val uiState: StateFlow<ActivityState> = _uiState.asStateFlow()
 
-    // StateFlow to hold and emit the list of doctors
+    // StateFlow to hold and emit the list of activities
     lateinit var uiActivityListState: StateFlow<ActivityListState>
 
-    // MutableState to hold and emit the API state for fetching doctors
+    // MutableState to hold and emit the API state for fetching activities
     var activityApiState: ActivitiesApiState by mutableStateOf(ActivitiesApiState.Loading)
         private set
 
@@ -54,8 +53,8 @@ class ActivityViewModel(
     }
 
     /**
-     * Fetches and updates the list of doctors from the repository.
-     * Sets the doctor list state and updates the UI state accordingly.
+     * Fetches and updates the list of activities from the repository.
+     * Sets the activity list state and updates the UI state accordingly.
      */
     fun getActivities() {
         try {
@@ -74,6 +73,12 @@ class ActivityViewModel(
         }
     }
 
+    /**
+     * Registers a user for a specific activity with the provided ID and amount.
+     *
+     * @param activityId The ID of the activity to register for.
+     * @param amount The amount of people to register.
+     */
     fun registreren(activityId: Int, amount: Int) {
         val registration = Registration(
             userid = 1,
@@ -83,20 +88,24 @@ class ActivityViewModel(
         try {
             viewModelScope.launch { appRepository.createRegistration(registration) }
         } catch (e: Exception) {
-
+            // Handle exceptions if necessary
         }
     }
 
+    /**
+     * Deletes a registration with the provided ID.
+     *
+     * @param id The ID of the registration to be deleted.
+     */
     fun deleteRegistration(id: Int) {
         try {
             viewModelScope.launch { appRepository.deleteRegistration(id) }
         } catch (e: Exception) {
-
+            // Handle exceptions if necessary
         }
     }
 
-
-    // Factory for creating instances of DoctorViewModel
+    // Factory for creating instances of ActivityViewModel
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -106,5 +115,4 @@ class ActivityViewModel(
             }
         }
     }
-
 }

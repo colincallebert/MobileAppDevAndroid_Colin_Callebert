@@ -7,10 +7,16 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipe
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
+import androidx.test.espresso.action.GeneralLocation
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import coil.size.Size
 import com.example.boerderij.ui.components.Destinations
 import com.example.boerderij.ui.components.MainApplication
 import org.junit.Assert.*
@@ -50,18 +56,7 @@ class NavigationTest {
 
     @Test
     fun navigateToActivitiesScreen() {
-        composeTestRule.onNodeWithText("Activiteiten")
-            .performClick()
-    }
-
-    @Test
-    fun navigateToActivityFormScreen() {
-        navigateToActivitiesScreen()
-        Thread.sleep(1000)
-        composeTestRule.onNodeWithTag("${"Ga naar detail"}+4")
-            .performClick()
-        Thread.sleep(1000)
-        composeTestRule.onNodeWithTag("${"Ga naar form"}")
+        composeTestRule.onNodeWithText("Registraties")
             .performClick()
     }
 
@@ -72,7 +67,7 @@ class NavigationTest {
 
     @Test
     fun NavHost_verifyActieButtonShownOnStartScreen() {
-        composeTestRule.onNodeWithText("Activiteiten").assertExists()
+        composeTestRule.onNodeWithText("Registraties").assertExists()
     }
 
     @Test
@@ -84,7 +79,7 @@ class NavigationTest {
     @Test
     fun NavHost_clickOnActivities_navigatesToActivitiesPage() {
         navigateToHomeScreen()
-        composeTestRule.onNodeWithText("Activiteiten")
+        composeTestRule.onNodeWithText("Registraties")
             .performClick()
         navController.assertCurrentRouteName(Destinations.Activities.name)
     }

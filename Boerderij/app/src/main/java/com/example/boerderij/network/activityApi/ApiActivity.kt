@@ -16,6 +16,14 @@ data class ApiActivityResponse(
 
 /**
  * Data class representing an activity.
+ *
+ * @property id The unique identifier for the activity.
+ * @property title The title of the activity.
+ * @property starttime The start time of the activity.
+ * @property endtime The end time of the activity.
+ * @property description The description of the activity.
+ * @property maxregistrations The maximum number of registrations allowed for the activity.
+ * @property amount The amount associated with the activity.
  */
 @Serializable
 data class Activity(
@@ -41,10 +49,10 @@ fun Flow<ApiActivityResponse>.asDomainObjects(): Flow<List<Activity>> {
 }
 
 /**
- * Converts an [ApiConditionResponse] to a list of domain object [Condition].
+ * Converts an [ApiActivityResponse] to a list of domain object [Activity].
  *
- * @receiver An instance of [ApiConditionResponse].
- * @return A list of [Condition] domain objects.
+ * @receiver An instance of [ApiActivityResponse].
+ * @return A list of [Activity] domain objects.
  */
 fun ApiActivityResponse.asDomainObjects(): List<Activity> {
     return activities.map {

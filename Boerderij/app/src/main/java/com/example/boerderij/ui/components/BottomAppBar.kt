@@ -39,7 +39,7 @@ fun BottomAppBar(
                 onClick = onHome,
                 // Label for the home screen
                 label = {
-                    Text("Home")
+                    Text(stringResource(R.string.home))
                 },
 
                 // Icon for the home screen
@@ -52,7 +52,7 @@ fun BottomAppBar(
                 }
             )
 
-            // Navigation item for the activities screen
+            // Navigation item for the registrations screen
             NavigationBarItem(
                 // Check if the current screen is the activities screen
                 selected = currentBackStackEntry == Destinations.Activities.name,
@@ -60,7 +60,7 @@ fun BottomAppBar(
                 onClick = onActivities,
                 // Label for the activities screen
                 label = {
-                    Text("Activiteiten")
+                    Text(stringResource(R.string.registrations))
                 },
                 // Icon for the activities screen
                 icon = {

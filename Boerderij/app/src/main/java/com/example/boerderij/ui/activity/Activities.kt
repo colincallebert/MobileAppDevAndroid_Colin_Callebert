@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.boerderij.R
@@ -116,16 +117,32 @@ fun Activities(
         modifier = Modifier.padding(top = 8.dp),
         columns = GridCells.Adaptive(minSize = 500.dp)
     ) {
-        items(uiActivityListState.activityList) { activity ->
-            // Displaying individual activity items with added padding
-            ActivityList(
-                activity, goDetail, Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
+        // Check if the filtered list is empty
+        if (uiActivityListState.activityList.filter { activity ->  activity.amount > 0}.isEmpty()) {
+            // Display a message when there are no reserved activities
+            item {
+                Text(
+                    text = "Geen gereserveerde activiteiten",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                )
+            }
+        } else {
+            // Display individual activity items when the list is not empty
+            items(uiActivityListState.activityList.filter { activity ->  activity.amount > 0}) { activity ->
+                // Displaying individual activity items with added padding
+                ActivityList(
+                    activity, goDetail, Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                )
+            }
         }
     }
 }
+
 
 /**
  * Retrieves the resource ID for the given image name.

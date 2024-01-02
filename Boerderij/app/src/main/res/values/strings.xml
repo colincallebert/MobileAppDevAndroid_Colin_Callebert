@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Boerderij</string>
     <string name="go_to_home">Ga naar home</string>
+    <string name="home">Home</string>
+    <string name="registrations">Registraties</string>
     <string name="go_to_activities">Ga naar activiteiten</string>
     <string name="go_to_aboutus">Ga naar over ons</string>
     <string name="go_back">Ga terug</string>

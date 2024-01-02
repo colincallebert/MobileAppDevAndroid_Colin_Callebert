@@ -16,7 +16,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.boerderij.R
 
-
+/**
+ * Composable function representing a UI component with a welcome message and a description card.
+ */
 @Composable
 fun Discription() {
     // Column layout containing welcome message, description card, and spacer

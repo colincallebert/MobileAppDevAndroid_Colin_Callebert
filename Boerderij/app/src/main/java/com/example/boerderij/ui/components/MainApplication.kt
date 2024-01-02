@@ -136,14 +136,14 @@ fun MainApplication(
                 composable(route = "${Destinations.ActivityRegistration.name}/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
                     if (id != null) {
-                        ActivityReservation(id = id, goDetail = goDetail)
+                        ActivityReservation(id = id, goActivities = goActivities)
                     } else {
                         Text("Invalid activity ID")
                     }
                 }
                 composable("${Destinations.ActivityDetail.name}/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
-                    ActivityDetail(id = id, goRegistration = goReservation)
+                    ActivityDetail(id = id, goRegistration = goReservation, goActivities = goActivities)
                 }
 
 

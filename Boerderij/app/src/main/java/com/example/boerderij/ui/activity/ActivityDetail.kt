@@ -40,7 +40,7 @@ import java.util.Locale
  * Composable function for the Activity Detail screen.
  */
 @Composable
-fun ActivityCard(activity: Activity, goRegistration: (Int) -> Unit) {
+fun ActivityCard(activity: Activity, goRegistration: (Int) -> Unit, goActivities: () -> Unit) {
     // Extracting image name and longdescription from the activity description (format: "shortdescription|image|longdescription")
     var imageName = activity.description.split("|")[1]
     var imageResourceId = getImageResourceId(imageName)
@@ -52,6 +52,7 @@ fun ActivityCard(activity: Activity, goRegistration: (Int) -> Unit) {
     // Check and perform action based on toggle state
     if (toggle) {
         verwijderActivity(activity.id)
+        goActivities()
         toggle = false
     }
 
@@ -231,7 +232,8 @@ fun formattedTimeRange(startTime: String, endTime: String): String {
 fun ActivityDetail(
     id: Int,
     activityViewModel: ActivityViewModel = viewModel(factory = ActivityViewModel.Factory),
-    goRegistration: (Int) -> Unit
+    goRegistration: (Int) -> Unit,
+    goActivities: () -> Unit
 ) {
     val uiActivityListState by activityViewModel.uiActivityListState.collectAsState()
     val activityApiState = activityViewModel.activityApiState
@@ -250,7 +252,7 @@ fun ActivityDetail(
             val activity = uiActivityListState.activityList.find { activity -> activity.id == id }
             if (activity != null) {
                 // Activity found, execute ActivityCard
-                ActivityCard(activity, goRegistration)
+                ActivityCard(activity, goRegistration, goActivities)
             }
         }
     }
